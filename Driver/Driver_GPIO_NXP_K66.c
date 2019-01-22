@@ -35,7 +35,12 @@ static const ARM_GPIO_CAPABILITIES DriverCapabilities = {
     1, /* supports falling edge interrupts */
     1, /* supports both edges interrupts */
     1, /* supports level-1 sensitive interrupts */
-    1  /* supports level-0 sensitive interrupts */
+    1, /* supports level-0 sensitive interrupts */
+    1, /* supports pull-up register on a pin */
+    1, /* supports pull-down register on a pin */
+    1, /* supports configuration of speed */
+    1, /* supports open-drain on a pin */
+    1  /* supports configuration of drive strength on a pin */
 };
 
 //
@@ -43,22 +48,22 @@ static const ARM_GPIO_CAPABILITIES DriverCapabilities = {
 //
 
 ////////////////////////////////////////////////////////////////////////////////
-ARM_DRIVER_VERSION 	ARM_GPIO_GetVersion_Shared    (void) { return DriverVersion; }
+ARM_DRIVER_VERSION 	ARM_GPIO_GetVersion_Shared(void) { return DriverVersion; }
 
-ARM_DRIVER_VERSION 	ARM_GPIO_GetVersion_0    (void) { return ARM_GPIO_GetVersion_Shared(); }
-ARM_DRIVER_VERSION 	ARM_GPIO_GetVersion_1    (void) { return ARM_GPIO_GetVersion_Shared(); }
-ARM_DRIVER_VERSION 	ARM_GPIO_GetVersion_2    (void) { return ARM_GPIO_GetVersion_Shared(); }
-ARM_DRIVER_VERSION 	ARM_GPIO_GetVersion_3    (void) { return ARM_GPIO_GetVersion_Shared(); }
-ARM_DRIVER_VERSION 	ARM_GPIO_GetVersion_4    (void) { return ARM_GPIO_GetVersion_Shared(); }
+ARM_DRIVER_VERSION 	ARM_GPIO_GetVersion_0(void) { return ARM_GPIO_GetVersion_Shared(); }
+ARM_DRIVER_VERSION 	ARM_GPIO_GetVersion_1(void) { return ARM_GPIO_GetVersion_Shared(); }
+ARM_DRIVER_VERSION 	ARM_GPIO_GetVersion_2(void) { return ARM_GPIO_GetVersion_Shared(); }
+ARM_DRIVER_VERSION 	ARM_GPIO_GetVersion_3(void) { return ARM_GPIO_GetVersion_Shared(); }
+ARM_DRIVER_VERSION 	ARM_GPIO_GetVersion_4(void) { return ARM_GPIO_GetVersion_Shared(); }
 
 ////////////////////////////////////////////////////////////////////////////////
-ARM_GPIO_CAPABILITIES 	ARM_GPIO_GetCapabilities_Shared	(void) { return DriverCapabilities; }
+ARM_GPIO_CAPABILITIES 	ARM_GPIO_GetCapabilities_Shared(void) { return DriverCapabilities; }
 
-ARM_GPIO_CAPABILITIES 	ARM_GPIO_GetCapabilities_0    (void) { return ARM_GPIO_GetCapabilities_Shared(); }
-ARM_GPIO_CAPABILITIES 	ARM_GPIO_GetCapabilities_1    (void) { return ARM_GPIO_GetCapabilities_Shared(); }
-ARM_GPIO_CAPABILITIES 	ARM_GPIO_GetCapabilities_2    (void) { return ARM_GPIO_GetCapabilities_Shared(); }
-ARM_GPIO_CAPABILITIES 	ARM_GPIO_GetCapabilities_3    (void) { return ARM_GPIO_GetCapabilities_Shared(); }
-ARM_GPIO_CAPABILITIES 	ARM_GPIO_GetCapabilities_4    (void) { return ARM_GPIO_GetCapabilities_Shared(); }
+ARM_GPIO_CAPABILITIES 	ARM_GPIO_GetCapabilities_0(void) { return ARM_GPIO_GetCapabilities_Shared(); }
+ARM_GPIO_CAPABILITIES 	ARM_GPIO_GetCapabilities_1(void) { return ARM_GPIO_GetCapabilities_Shared(); }
+ARM_GPIO_CAPABILITIES 	ARM_GPIO_GetCapabilities_2(void) { return ARM_GPIO_GetCapabilities_Shared(); }
+ARM_GPIO_CAPABILITIES 	ARM_GPIO_GetCapabilities_3(void) { return ARM_GPIO_GetCapabilities_Shared(); }
+ARM_GPIO_CAPABILITIES 	ARM_GPIO_GetCapabilities_4(void) { return ARM_GPIO_GetCapabilities_Shared(); }
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -158,11 +163,11 @@ int32_t ARM_GPIO_Initialize_Shared(const ARM_GPIO_CONFIG* port)
     return ARM_DRIVER_OK;
 }
 
-int32_t ARM_GPIO_Initialize_0	(ARM_GPIO_SignalEvent_t cb_event) { return state_a.signal = cb_event, ARM_GPIO_Initialize_Shared(&gpio_a); }
-int32_t ARM_GPIO_Initialize_1	(ARM_GPIO_SignalEvent_t cb_event) { return state_b.signal = cb_event, ARM_GPIO_Initialize_Shared(&gpio_b); }
-int32_t ARM_GPIO_Initialize_2	(ARM_GPIO_SignalEvent_t cb_event) { return state_c.signal = cb_event, ARM_GPIO_Initialize_Shared(&gpio_c); }
-int32_t ARM_GPIO_Initialize_3	(ARM_GPIO_SignalEvent_t cb_event) { return state_d.signal = cb_event, ARM_GPIO_Initialize_Shared(&gpio_d); }
-int32_t ARM_GPIO_Initialize_4	(ARM_GPIO_SignalEvent_t cb_event) { return state_e.signal = cb_event, ARM_GPIO_Initialize_Shared(&gpio_e); }
+int32_t ARM_GPIO_Initialize_0(ARM_GPIO_SignalEvent_t cb_event) { return state_a.signal = cb_event, ARM_GPIO_Initialize_Shared(&gpio_a); }
+int32_t ARM_GPIO_Initialize_1(ARM_GPIO_SignalEvent_t cb_event) { return state_b.signal = cb_event, ARM_GPIO_Initialize_Shared(&gpio_b); }
+int32_t ARM_GPIO_Initialize_2(ARM_GPIO_SignalEvent_t cb_event) { return state_c.signal = cb_event, ARM_GPIO_Initialize_Shared(&gpio_c); }
+int32_t ARM_GPIO_Initialize_3(ARM_GPIO_SignalEvent_t cb_event) { return state_d.signal = cb_event, ARM_GPIO_Initialize_Shared(&gpio_d); }
+int32_t ARM_GPIO_Initialize_4(ARM_GPIO_SignalEvent_t cb_event) { return state_e.signal = cb_event, ARM_GPIO_Initialize_Shared(&gpio_e); }
 
 ////////////////////////////////////////////////////////////////////////////////
 int32_t ARM_GPIO_Uninitialize_Shared(const ARM_GPIO_CONFIG* cfg)
