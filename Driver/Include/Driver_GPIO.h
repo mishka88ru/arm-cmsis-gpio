@@ -50,10 +50,10 @@ extern "C"
 
 #define ARM_GPIO_PIN_CFG                  (0x01)     ///< Command to configure all pin parameters at once; arg = configuration.
 #define ARM_GPIO_PIN_STATE                (0x02)     ///< Command to configure pin as GPIO; arg = configuration.
-#define ARM_GPIO_PIN_DIRECTION		      (0x03)     ///< Configure directions of the port's pins; arg = directions (0 - input, 1 - output)
-#define ARM_GPIO_PIN_IRQ		          (0x04)     ///< Command to configure interrupt on the pin; arg = configuration.
-#define ARM_GPIO_PIN_PULL		          (0x05)     ///< Command to configure pull-up/-down register on the pin; arg = configuration.
-#define ARM_GPIO_PIN_SPEED		          (0x06)     ///< Command to configure output speed of the pin; arg = configuration.
+#define ARM_GPIO_PIN_DIRECTION            (0x03)     ///< Configure directions of the port's pins; arg = directions (0 - input, 1 - output)
+#define ARM_GPIO_PIN_IRQ                  (0x04)     ///< Command to configure interrupt on the pin; arg = configuration.
+#define ARM_GPIO_PIN_PULL                 (0x05)     ///< Command to configure pull-up/-down register on the pin; arg = configuration.
+#define ARM_GPIO_PIN_SPEED                (0x06)     ///< Command to configure output speed of the pin; arg = configuration.
 #define ARM_GPIO_PIN_OPEN_DRAIN           (0x07)     ///< Command to configure open-drain output on the pin; arg = configuration.
 #define ARM_GPIO_PIN_DRIVE_STRENGTH       (0x08)     ///< Command to configure open-drain output on the pin; arg = configuration.
 
@@ -75,10 +75,10 @@ extern "C"
 #define ARM_GPIO_PIN_PULL_UP              (0x01)     ///< Activate pull-up register.
 #define ARM_GPIO_PIN_PULL_DOWN            (0x02)     ///< Activate pull-down register.
 
-#define ARM_GPIO_PIN_SPEED_VERY_HIGH      (0x00)	 ///< Very high speed.
-#define ARM_GPIO_PIN_SPEED_HIGH	          (0x01)	 ///< High speed.
-#define ARM_GPIO_PIN_SPEED_MEDIUM	      (0x02)	 ///< Medium speed.
-#define ARM_GPIO_PIN_SPEED_LOW	          (0x03)	 ///< Low speed.
+#define ARM_GPIO_PIN_SPEED_VERY_HIGH      (0x00)     ///< Very high speed.
+#define ARM_GPIO_PIN_SPEED_HIGH           (0x01)     ///< High speed.
+#define ARM_GPIO_PIN_SPEED_MEDIUM         (0x02)     ///< Medium speed.
+#define ARM_GPIO_PIN_SPEED_LOW            (0x03)     ///< Low speed.
 
 #define ARM_GPIO_PIN_OPEN_DRAIN_DISABLE   (0x00)     ///< Disable open-drain.
 #define ARM_GPIO_PIN_OPEN_DRAIN_ENABLE    (0x01)     ///< Enable open-drain.
@@ -295,7 +295,7 @@ typedef struct _ARM_DRIVER_GPIO {
   void                   (*ClearPortEvents) (uint32_t mask);                     ///< Pointer to \ref ARM_GPIO_ClearPortEvents : Clear port events mask.
   
   int32_t                (*ControlPin)      (uint32_t pin, 
-											 uint32_t control, uint32_t arg);    ///< Pointer to \ref ARM_GPIO_ControlPin : Control single GPIO Pin.
+                                             uint32_t control, uint32_t arg);    ///< Pointer to \ref ARM_GPIO_ControlPin : Control single GPIO Pin.
   void                   (*SetPin)          (uint32_t pin);                      ///< Pointer to \ref ARM_GPIO_SetPin : Set pin value to 1.
   void                   (*ClearPin)        (uint32_t pin);                      ///< Pointer to \ref ARM_GPIO_ClearPin : Clear pin value to 0.
   void                   (*TogglePin)       (uint32_t pin);                      ///< Pointer to \ref ARM_GPIO_TogglePin : Toggle pin value.
