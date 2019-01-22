@@ -1,1 +1,1 @@
-#### Expermintal ARM CMSIS GPIO Driver (for NXP Kinetis K66)
+#### Experimental ARM CMSIS GPIO Driver (for NXP Kinetis K66)
