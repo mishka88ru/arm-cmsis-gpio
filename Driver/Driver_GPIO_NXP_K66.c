@@ -43,22 +43,22 @@ static const ARM_GPIO_CAPABILITIES DriverCapabilities = {
 //
 
 ////////////////////////////////////////////////////////////////////////////////
-ARM_DRIVER_VERSION 	ARM_GPIO_GetVersion_Shared	(void) { return DriverVersion; }
+ARM_DRIVER_VERSION 	ARM_GPIO_GetVersion_Shared    (void) { return DriverVersion; }
 
-ARM_DRIVER_VERSION 	ARM_GPIO_GetVersion_0		(void) { return ARM_GPIO_GetVersion_Shared(); }
-ARM_DRIVER_VERSION 	ARM_GPIO_GetVersion_1		(void) { return ARM_GPIO_GetVersion_Shared(); }
-ARM_DRIVER_VERSION 	ARM_GPIO_GetVersion_2		(void) { return ARM_GPIO_GetVersion_Shared(); }
-ARM_DRIVER_VERSION 	ARM_GPIO_GetVersion_3		(void) { return ARM_GPIO_GetVersion_Shared(); }
-ARM_DRIVER_VERSION 	ARM_GPIO_GetVersion_4		(void) { return ARM_GPIO_GetVersion_Shared(); }
+ARM_DRIVER_VERSION 	ARM_GPIO_GetVersion_0    (void) { return ARM_GPIO_GetVersion_Shared(); }
+ARM_DRIVER_VERSION 	ARM_GPIO_GetVersion_1    (void) { return ARM_GPIO_GetVersion_Shared(); }
+ARM_DRIVER_VERSION 	ARM_GPIO_GetVersion_2    (void) { return ARM_GPIO_GetVersion_Shared(); }
+ARM_DRIVER_VERSION 	ARM_GPIO_GetVersion_3    (void) { return ARM_GPIO_GetVersion_Shared(); }
+ARM_DRIVER_VERSION 	ARM_GPIO_GetVersion_4    (void) { return ARM_GPIO_GetVersion_Shared(); }
 
 ////////////////////////////////////////////////////////////////////////////////
 ARM_GPIO_CAPABILITIES 	ARM_GPIO_GetCapabilities_Shared	(void) { return DriverCapabilities; }
 
-ARM_GPIO_CAPABILITIES 	ARM_GPIO_GetCapabilities_0		(void) { return ARM_GPIO_GetCapabilities_Shared(); }
-ARM_GPIO_CAPABILITIES 	ARM_GPIO_GetCapabilities_1		(void) { return ARM_GPIO_GetCapabilities_Shared(); }
-ARM_GPIO_CAPABILITIES 	ARM_GPIO_GetCapabilities_2		(void) { return ARM_GPIO_GetCapabilities_Shared(); }
-ARM_GPIO_CAPABILITIES 	ARM_GPIO_GetCapabilities_3		(void) { return ARM_GPIO_GetCapabilities_Shared(); }
-ARM_GPIO_CAPABILITIES 	ARM_GPIO_GetCapabilities_4		(void) { return ARM_GPIO_GetCapabilities_Shared(); }
+ARM_GPIO_CAPABILITIES 	ARM_GPIO_GetCapabilities_0    (void) { return ARM_GPIO_GetCapabilities_Shared(); }
+ARM_GPIO_CAPABILITIES 	ARM_GPIO_GetCapabilities_1    (void) { return ARM_GPIO_GetCapabilities_Shared(); }
+ARM_GPIO_CAPABILITIES 	ARM_GPIO_GetCapabilities_2    (void) { return ARM_GPIO_GetCapabilities_Shared(); }
+ARM_GPIO_CAPABILITIES 	ARM_GPIO_GetCapabilities_3    (void) { return ARM_GPIO_GetCapabilities_Shared(); }
+ARM_GPIO_CAPABILITIES 	ARM_GPIO_GetCapabilities_4    (void) { return ARM_GPIO_GetCapabilities_Shared(); }
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -67,30 +67,30 @@ typedef void (*ISR)();
 // placed in ROM
 typedef struct
 {
-	const PORT_MemMapPtr 	port;
-	const GPIO_MemMapPtr 	gpio;
-	const uint32_t 			irq_vector;
-	const ISR 				irq_handler;
+    const PORT_MemMapPtr    port;
+    const GPIO_MemMapPtr    gpio;
+    const uint32_t          irq_vector;
+    const ISR               irq_handler;
 } ARM_GPIO_CONFIG;
 
 // placed in RAM
 typedef struct
 {
-	ARM_GPIO_SignalEvent_t		signal;
-	ARM_GPIO_STATUS 			status;
+    ARM_GPIO_SignalEvent_t     signal;
+    ARM_GPIO_STATUS            status;
 } ARM_GPIO_STATE;
 
 // Will be called from IRQ handler.
 void gpio_shared_handler(const ARM_GPIO_CONFIG* cfg, ARM_GPIO_SignalEvent_t signal)
 {
-	// Clear interrupts.
-	const uint32_t isfr = cfg->port->ISFR;
-	cfg->port->ISFR |= isfr;
-	
-	// Call user handler, if it is configured.
-	// Argument = bitmask of active interrupts.
-	if (signal)
-		(*signal)(isfr);
+    // Clear interrupts.
+    const uint32_t isfr = cfg->port->ISFR;
+    cfg->port->ISFR = isfr;
+    
+    // Call user handler, if it is configured.
+    // Argument = bitmask of active interrupts.
+    if (signal)
+        (*signal)(isfr);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -103,38 +103,38 @@ void gpio_e_handler();
 
 
 const ARM_GPIO_CONFIG gpio_a = {
-	.port 			= PORTA_BASE_PTR,
-	.gpio 			= PTA_BASE_PTR,
-	.irq_vector 	= INT_PORTE,
-	.irq_handler 	= gpio_a_handler
+    .port           = PORTA_BASE_PTR,
+    .gpio           = PTA_BASE_PTR,
+    .irq_vector     = INT_PORTE,
+    .irq_handler    = gpio_a_handler
 };
 
 const ARM_GPIO_CONFIG gpio_b = {
-	.port 			= PORTB_BASE_PTR,
-	.gpio 			= PTB_BASE_PTR,
-	.irq_vector 	= INT_PORTB,
-	.irq_handler 	= gpio_b_handler
+    .port           = PORTB_BASE_PTR,
+    .gpio           = PTB_BASE_PTR,
+    .irq_vector     = INT_PORTB,
+    .irq_handler    = gpio_b_handler
 };
 
 const ARM_GPIO_CONFIG gpio_c = {
-	.port 			= PORTC_BASE_PTR,
-	.gpio 			= PTC_BASE_PTR,
-	.irq_vector 	= INT_PORTC,
-	.irq_handler 	= gpio_c_handler
+    .port           = PORTC_BASE_PTR,
+    .gpio           = PTC_BASE_PTR,
+    .irq_vector     = INT_PORTC,
+    .irq_handler    = gpio_c_handler
 };
 
 const ARM_GPIO_CONFIG gpio_d = {
-	.port 			= PORTD_BASE_PTR,
-	.gpio 			= PTD_BASE_PTR,
-	.irq_vector 	= INT_PORTD,
-	.irq_handler 	= gpio_d_handler
+    .port           = PORTD_BASE_PTR,
+    .gpio           = PTD_BASE_PTR,
+    .irq_vector     = INT_PORTD,
+    .irq_handler    = gpio_d_handler
 };
 
 const ARM_GPIO_CONFIG gpio_e = {
-	.port 			= PORTE_BASE_PTR,
-	.gpio 			= PTE_BASE_PTR,
-	.irq_vector 	= INT_PORTE,
-	.irq_handler 	= gpio_e_handler
+    .port           = PORTE_BASE_PTR,
+    .gpio           = PTE_BASE_PTR,
+    .irq_vector     = INT_PORTE,
+    .irq_handler    = gpio_e_handler
 };
 
 
@@ -153,9 +153,9 @@ void gpio_e_handler() { gpio_shared_handler(&gpio_e, state_e.signal); }
 ////////////////////////////////////////////////////////////////////////////////
 int32_t ARM_GPIO_Initialize_Shared(const ARM_GPIO_CONFIG* port)
 {
-	((uint32_t*)(SCB_VTOR))[port->irq_vector] = (uint32_t)port->irq_handler;
-	__DSB();
-	return ARM_DRIVER_OK;
+    ((uint32_t*)(SCB_VTOR))[port->irq_vector] = (uint32_t)port->irq_handler;
+    __DSB();
+    return ARM_DRIVER_OK;
 }
 
 int32_t ARM_GPIO_Initialize_0	(ARM_GPIO_SignalEvent_t cb_event) { return state_a.signal = cb_event, ARM_GPIO_Initialize_Shared(&gpio_a); }
@@ -167,7 +167,7 @@ int32_t ARM_GPIO_Initialize_4	(ARM_GPIO_SignalEvent_t cb_event) { return state_e
 ////////////////////////////////////////////////////////////////////////////////
 int32_t ARM_GPIO_Uninitialize_Shared(const ARM_GPIO_CONFIG* cfg)
 {
-	return ARM_DRIVER_OK;
+    return ARM_DRIVER_OK;
 }
 
 int32_t ARM_GPIO_Uninitialize_0(void) { return ARM_GPIO_Uninitialize_Shared(&gpio_a); }
@@ -179,16 +179,16 @@ int32_t ARM_GPIO_Uninitialize_4(void) { return ARM_GPIO_Uninitialize_Shared(&gpi
 ////////////////////////////////////////////////////////////////////////////////
 int32_t ARM_GPIO_PowerControl_Shared(ARM_POWER_STATE state, const ARM_GPIO_CONFIG* cfg, uint32_t sim_scgc5_mask)
 {
-	switch (state)
+    switch (state)
     {
 	// Most often ports should be always enabled because of other peripherals.
-		case ARM_POWER_OFF : /*SIM_SCGC5 &= ~sim_scgc5_mask;*/ break;
-		case ARM_POWER_FULL: /*SIM_SCGC5 |=  sim_scgc5_mask;*/ break;
-		
-		// POWER_LOW is unsupported
-		default: return ARM_DRIVER_ERROR_UNSUPPORTED;
+	case ARM_POWER_OFF : /*SIM_SCGC5 &= ~sim_scgc5_mask;*/ break;
+	case ARM_POWER_FULL: /*SIM_SCGC5 |=  sim_scgc5_mask;*/ break;
+	
+	// POWER_LOW is unsupported
+	default: return ARM_DRIVER_ERROR_UNSUPPORTED;
     }
-	return ARM_DRIVER_OK;
+    return ARM_DRIVER_OK;
 }
 
 int32_t ARM_GPIO_PowerControl_0(ARM_POWER_STATE state) { return ARM_GPIO_PowerControl_Shared(state, &gpio_a, SIM_SCGC5_PORTA_MASK); }
@@ -200,13 +200,11 @@ int32_t ARM_GPIO_PowerControl_4(ARM_POWER_STATE state) { return ARM_GPIO_PowerCo
 ////////////////////////////////////////////////////////////////////////////////
 int32_t ARM_GPIO_Control_Shared(uint32_t control, uint32_t arg, const ARM_GPIO_CONFIG* cfg)
 {
-	switch (control)
-	{
-		
-		default: return ARM_DRIVER_ERROR_UNSUPPORTED;
-	}
-	
-//	return ARM_DRIVER_OK;
+    switch (control)
+    {
+        default: return ARM_DRIVER_ERROR_UNSUPPORTED;
+    }
+//    return ARM_DRIVER_OK;
 }
 
 int32_t ARM_GPIO_Control_0(uint32_t control, uint32_t arg) { return ARM_GPIO_Control_Shared(control, arg, &gpio_a); }
@@ -269,187 +267,184 @@ void ARM_GPIO_ClearPortEvents_4(uint32_t mask) { gpio_e.port->ISFR = mask; }
 ////////////////////////////////////////////////////////////////////////////////
 int32_t ARM_GPIO_ControlPin_Config(const ARM_GPIO_CONFIG* cfg, uint32_t pin, uint32_t arg)
 {
-	uint32_t pcr = 0;
+    uint32_t pcr = 0;
+    
+    if (arg & ARM_GPIO_PIN_CFG_ENABLED)
+        pcr |= PORT_PCR_MUX(1);
 	
-	if (arg & ARM_GPIO_PIN_CFG_ENABLED)
-		pcr |= PORT_PCR_MUX(1);
-	
-	uint32_t tmp = (arg & ARM_GPIO_PIN_CFG_IRQ_Msk) >> ARM_GPIO_PIN_CFG_IRQ_Pos;
-	switch (tmp)
-	{
-		case ARM_GPIO_PIN_IRQ_NONE:        tmp = 0x0; break;
-		case ARM_GPIO_PIN_IRQ_RISING:      tmp = 0x9; break;
-		case ARM_GPIO_PIN_IRQ_FALLING:     tmp = 0xA; break;
-		case ARM_GPIO_PIN_IRQ_BOTH:        tmp = 0xB; break;
-		case ARM_GPIO_PIN_IRQ_LEVEL_HIGH:  tmp = 0xC; break;
-		case ARM_GPIO_PIN_IRQ_LEVEL_LOW:   tmp = 0x8; break;
-		
-		default: return ARM_DRIVER_ERROR_PARAMETER;
-	}
-	pcr |= PORT_PCR_IRQC(tmp);
-	
-	tmp = (arg & ARM_GPIO_PIN_CFG_PULL_Msk) >> ARM_GPIO_PIN_CFG_PULL_Pos;
-	switch (tmp)
-	{
-		case ARM_GPIO_PIN_PULL_NONE: break;
-		case ARM_GPIO_PIN_PULL_UP:   pcr |= (PORT_PCR_PE_MASK | PORT_PCR_PS_MASK); break;
-		case ARM_GPIO_PIN_PULL_DOWN: pcr |= PORT_PCR_PE_MASK; break;
-		
-		default: return ARM_DRIVER_ERROR_PARAMETER;
-	}
-	
-	tmp = (arg & ARM_GPIO_PIN_CFG_SPEED_Msk) >> ARM_GPIO_PIN_CFG_SPEED_Pos;
-	switch (tmp)
-	{
-		case ARM_GPIO_PIN_SPEED_LOW:
-		case ARM_GPIO_PIN_SPEED_MEDIUM:
-			pcr |= PORT_PCR_SRE_MASK;
-			break;
-		
-		case ARM_GPIO_PIN_SPEED_HIGH:
-		case ARM_GPIO_PIN_SPEED_VERY_HIGH:
-			break;
-		
-		default: return ARM_DRIVER_ERROR_PARAMETER;
-	}
-	
-	if (arg & ARM_GPIO_PIN_CFG_OPEN_DRAIN)
-		pcr |= PORT_PCR_ODE_MASK;
-	
-	if (arg & ARM_GPIO_PIN_CFG_DRIVE_STRENGTH)
-		pcr |= PORT_PCR_DSE_MASK;
-	
-	cfg->port->PCR[pin] = pcr;
-	
-	// Set direction.
-	if (arg & ARM_GPIO_PIN_CFG_OUTPUT)
-		cfg->gpio->PDDR |=  (1u << pin);
-	else
-		cfg->gpio->PDDR &= ~(1u << pin);
-	
-	return ARM_DRIVER_OK;
+    uint32_t tmp = (arg & ARM_GPIO_PIN_CFG_IRQ_Msk) >> ARM_GPIO_PIN_CFG_IRQ_Pos;
+    switch (tmp)
+    {
+        case ARM_GPIO_PIN_IRQ_NONE:        tmp = 0x0; break;
+        case ARM_GPIO_PIN_IRQ_RISING:      tmp = 0x9; break;
+        case ARM_GPIO_PIN_IRQ_FALLING:     tmp = 0xA; break;
+        case ARM_GPIO_PIN_IRQ_BOTH:        tmp = 0xB; break;
+        case ARM_GPIO_PIN_IRQ_LEVEL_HIGH:  tmp = 0xC; break;
+        case ARM_GPIO_PIN_IRQ_LEVEL_LOW:   tmp = 0x8; break;
+        
+        default: return ARM_DRIVER_ERROR_PARAMETER;
+    }
+    pcr |= PORT_PCR_IRQC(tmp);
+    
+    tmp = (arg & ARM_GPIO_PIN_CFG_PULL_Msk) >> ARM_GPIO_PIN_CFG_PULL_Pos;
+    switch (tmp)
+    {
+        case ARM_GPIO_PIN_PULL_NONE: break;
+        case ARM_GPIO_PIN_PULL_UP:   pcr |= (PORT_PCR_PE_MASK | PORT_PCR_PS_MASK); break;
+        case ARM_GPIO_PIN_PULL_DOWN: pcr |= PORT_PCR_PE_MASK; break;
+        
+        default: return ARM_DRIVER_ERROR_PARAMETER;
+    }
+    
+    tmp = (arg & ARM_GPIO_PIN_CFG_SPEED_Msk) >> ARM_GPIO_PIN_CFG_SPEED_Pos;
+    switch (tmp)
+    {
+        case ARM_GPIO_PIN_SPEED_LOW:
+        case ARM_GPIO_PIN_SPEED_MEDIUM:
+            pcr |= PORT_PCR_SRE_MASK;
+            break;
+        
+        case ARM_GPIO_PIN_SPEED_HIGH:
+        case ARM_GPIO_PIN_SPEED_VERY_HIGH:
+            break;
+        
+        default: return ARM_DRIVER_ERROR_PARAMETER;
+    }
+    
+    if (arg & ARM_GPIO_PIN_CFG_OPEN_DRAIN)
+        pcr |= PORT_PCR_ODE_MASK;
+    
+    if (arg & ARM_GPIO_PIN_CFG_DRIVE_STRENGTH)
+        pcr |= PORT_PCR_DSE_MASK;
+    
+    cfg->port->PCR[pin] = pcr;
+    
+    // Set direction.
+    if (arg & ARM_GPIO_PIN_CFG_OUTPUT)
+        cfg->gpio->PDDR |=  (1u << pin);
+    else
+        cfg->gpio->PDDR &= ~(1u << pin);
+    
+    return ARM_DRIVER_OK;
 }
 
 int32_t ARM_GPIO_ControlPin_State(volatile uint32_t* pcr, uint32_t arg)
 {
-	switch (arg)
-	{
-		case ARM_GPIO_PIN_STATE_DISABLE: *pcr &= ~PORT_PCR_MUX_MASK;                           return ARM_DRIVER_OK;
-		case ARM_GPIO_PIN_STATE_ENABLE:  *pcr = (*pcr & ~PORT_PCR_MUX_MASK) | PORT_PCR_MUX(1); return ARM_DRIVER_OK;
-		
-		default: return ARM_DRIVER_ERROR_PARAMETER;
-	}
+    switch (arg)
+    {
+        case ARM_GPIO_PIN_STATE_DISABLE: *pcr &= ~PORT_PCR_MUX_MASK;                           return ARM_DRIVER_OK;
+        case ARM_GPIO_PIN_STATE_ENABLE:  *pcr = (*pcr & ~PORT_PCR_MUX_MASK) | PORT_PCR_MUX(1); return ARM_DRIVER_OK;
+        
+        default: return ARM_DRIVER_ERROR_PARAMETER;
+    }
 }
 
 int32_t ARM_GPIO_ControlPin_Direction(const ARM_GPIO_CONFIG* cfg, uint32_t pin, uint32_t arg)
 {
-	switch (arg)
-	{
-		case ARM_GPIO_PIN_DIRECTION_INPUT:  cfg->gpio->PDDR &= ~(1u << pin); break;
-		case ARM_GPIO_PIN_DIRECTION_OUTPUT: cfg->gpio->PDDR |=  (1u << pin); break;
-		
-		default: return ARM_DRIVER_ERROR_PARAMETER;
-	}
-	
-	return ARM_DRIVER_OK;
+    switch (arg)
+    {
+        case ARM_GPIO_PIN_DIRECTION_INPUT:  cfg->gpio->PDDR &= ~(1u << pin); break;
+        case ARM_GPIO_PIN_DIRECTION_OUTPUT: cfg->gpio->PDDR |=  (1u << pin); break;
+        
+        default: return ARM_DRIVER_ERROR_PARAMETER;
+    }
+    
+    return ARM_DRIVER_OK;
 }
 
 int32_t ARM_GPIO_ControlPin_IRQ(volatile uint32_t* pcr, uint32_t arg)
 {
-	uint32_t irq;
-	switch (arg)
-	{
-		case ARM_GPIO_PIN_IRQ_NONE:        irq = 0x0; break;
-		case ARM_GPIO_PIN_IRQ_RISING:      irq = 0x9; break;
-		case ARM_GPIO_PIN_IRQ_FALLING:     irq = 0xA; break;
-		case ARM_GPIO_PIN_IRQ_BOTH:        irq = 0xB; break;
-		case ARM_GPIO_PIN_IRQ_LEVEL_HIGH:  irq = 0xC; break;
-		case ARM_GPIO_PIN_IRQ_LEVEL_LOW:   irq = 0x8; break;
-		
-		default: return ARM_DRIVER_ERROR_PARAMETER;
-	}
-	
-	*pcr = (*pcr & ~PORT_PCR_IRQC_MASK) | PORT_PCR_IRQC(irq);
-	
-	return ARM_DRIVER_OK;
+    uint32_t irq;
+    switch (arg)
+    {
+        case ARM_GPIO_PIN_IRQ_NONE:        irq = 0x0; break;
+        case ARM_GPIO_PIN_IRQ_RISING:      irq = 0x9; break;
+        case ARM_GPIO_PIN_IRQ_FALLING:     irq = 0xA; break;
+        case ARM_GPIO_PIN_IRQ_BOTH:        irq = 0xB; break;
+        case ARM_GPIO_PIN_IRQ_LEVEL_HIGH:  irq = 0xC; break;
+        case ARM_GPIO_PIN_IRQ_LEVEL_LOW:   irq = 0x8; break;
+        
+        default: return ARM_DRIVER_ERROR_PARAMETER;
+    }
+    
+    *pcr = (*pcr & ~PORT_PCR_IRQC_MASK) | PORT_PCR_IRQC(irq);
+    return ARM_DRIVER_OK;
 }
 
 
 int32_t ARM_GPIO_ControlPin_Pull(volatile uint32_t* pcr, uint32_t arg)
 {
-	switch (arg)
-	{
-		case ARM_GPIO_PIN_PULL_NONE: *pcr &= ~PORT_PCR_PE_MASK;                            break;
-		case ARM_GPIO_PIN_PULL_UP:   *pcr |= (PORT_PCR_PE_MASK | PORT_PCR_PS_MASK);        break;
-		case ARM_GPIO_PIN_PULL_DOWN: *pcr = (*pcr & ~PORT_PCR_PS_MASK) | PORT_PCR_PE_MASK; break;
-		
-		default: return ARM_DRIVER_ERROR_PARAMETER;
-	}
-	
-	return ARM_DRIVER_OK;
+    switch (arg)
+    {
+        case ARM_GPIO_PIN_PULL_NONE: *pcr &= ~PORT_PCR_PE_MASK;                            break;
+        case ARM_GPIO_PIN_PULL_UP:   *pcr |= (PORT_PCR_PE_MASK | PORT_PCR_PS_MASK);        break;
+        case ARM_GPIO_PIN_PULL_DOWN: *pcr = (*pcr & ~PORT_PCR_PS_MASK) | PORT_PCR_PE_MASK; break;
+        
+        default: return ARM_DRIVER_ERROR_PARAMETER;
+    }
+    return ARM_DRIVER_OK;
 }
 
 int32_t ARM_GPIO_ControlPin_Speed(volatile uint32_t* pcr, uint32_t arg)
 {
-	switch (arg)
-	{
-		case ARM_GPIO_PIN_SPEED_LOW:
-		case ARM_GPIO_PIN_SPEED_MEDIUM:
-			*pcr |= PORT_PCR_SRE_MASK;
-			break;
-		
-		case ARM_GPIO_PIN_SPEED_HIGH:
-		case ARM_GPIO_PIN_SPEED_VERY_HIGH:
-			*pcr &= ~PORT_PCR_SRE_MASK;
-			break;
-		
-		default: return ARM_DRIVER_ERROR_PARAMETER;
-	}
-	
-	return ARM_DRIVER_OK;
+    switch (arg)
+    {
+        case ARM_GPIO_PIN_SPEED_LOW:
+        case ARM_GPIO_PIN_SPEED_MEDIUM:
+            *pcr |= PORT_PCR_SRE_MASK;
+            break;
+        
+        case ARM_GPIO_PIN_SPEED_HIGH:
+        case ARM_GPIO_PIN_SPEED_VERY_HIGH:
+            *pcr &= ~PORT_PCR_SRE_MASK;
+            break;
+        
+        default: return ARM_DRIVER_ERROR_PARAMETER;
+    }
+    return ARM_DRIVER_OK;
 }
 
 int32_t ARM_GPIO_ControlPin_OpenDrain(volatile uint32_t* pcr, uint32_t arg)
 {
-	switch (arg)
-	{
-		case ARM_GPIO_PIN_OPEN_DRAIN_DISABLE: *pcr &= ~PORT_PCR_ODE_MASK; return ARM_DRIVER_OK;
-		case ARM_GPIO_PIN_OPEN_DRAIN_ENABLE:  *pcr |=  PORT_PCR_ODE_MASK; return ARM_DRIVER_OK;
-		
-		default: return ARM_DRIVER_ERROR_PARAMETER;
-	}
+    switch (arg)
+    {
+        case ARM_GPIO_PIN_OPEN_DRAIN_DISABLE: *pcr &= ~PORT_PCR_ODE_MASK; return ARM_DRIVER_OK;
+        case ARM_GPIO_PIN_OPEN_DRAIN_ENABLE:  *pcr |=  PORT_PCR_ODE_MASK; return ARM_DRIVER_OK;
+        
+        default: return ARM_DRIVER_ERROR_PARAMETER;
+    }
 }
 
 int32_t ARM_GPIO_ControlPin_DriveStrength(volatile uint32_t* pcr, uint32_t arg)
 {
-	switch (arg)
-	{
-		case ARM_GPIO_PIN_DRIVE_STRENGTH_LOW:  *pcr &= ~PORT_PCR_DSE_MASK; return ARM_DRIVER_OK;
-		case ARM_GPIO_PIN_DRIVE_STRENGTH_HIGH: *pcr |=  PORT_PCR_DSE_MASK; return ARM_DRIVER_OK;
-		
-		default: return ARM_DRIVER_ERROR_PARAMETER;
-	}
+    switch (arg)
+    {
+        case ARM_GPIO_PIN_DRIVE_STRENGTH_LOW:  *pcr &= ~PORT_PCR_DSE_MASK; return ARM_DRIVER_OK;
+        case ARM_GPIO_PIN_DRIVE_STRENGTH_HIGH: *pcr |=  PORT_PCR_DSE_MASK; return ARM_DRIVER_OK;
+        
+        default: return ARM_DRIVER_ERROR_PARAMETER;
+    }
 }
 
 
 int32_t ARM_GPIO_ControlPin_Shared(uint32_t pin, uint32_t control, uint32_t arg, const ARM_GPIO_CONFIG* cfg)
 {
-	if (pin >= 32)
-		return ARM_DRIVER_ERROR_PARAMETER;
+    if (pin >= 32)
+        return ARM_DRIVER_ERROR_PARAMETER;
 	
-	switch (control)
-	{
-		case ARM_GPIO_PIN_CFG:            return ARM_GPIO_ControlPin_Config        (cfg, pin, arg);
-		case ARM_GPIO_PIN_STATE:          return ARM_GPIO_ControlPin_State         (&cfg->port->PCR[pin], arg);
-		case ARM_GPIO_PIN_DIRECTION:      return ARM_GPIO_ControlPin_Direction     (cfg, pin, arg);
-		case ARM_GPIO_PIN_IRQ:            return ARM_GPIO_ControlPin_IRQ           (&cfg->port->PCR[pin], arg);
-		case ARM_GPIO_PIN_PULL:           return ARM_GPIO_ControlPin_Pull          (&cfg->port->PCR[pin], arg);
-		case ARM_GPIO_PIN_SPEED:          return ARM_GPIO_ControlPin_Speed         (&cfg->port->PCR[pin], arg);
-		case ARM_GPIO_PIN_OPEN_DRAIN:     return ARM_GPIO_ControlPin_OpenDrain     (&cfg->port->PCR[pin], arg);
-		case ARM_GPIO_PIN_DRIVE_STRENGTH: return ARM_GPIO_ControlPin_DriveStrength (&cfg->port->PCR[pin], arg);
-		
-		default: return ARM_DRIVER_ERROR_UNSUPPORTED;
-	}
+    switch (control)
+    {
+        case ARM_GPIO_PIN_CFG:            return ARM_GPIO_ControlPin_Config        (cfg, pin, arg);
+        case ARM_GPIO_PIN_STATE:          return ARM_GPIO_ControlPin_State         (&cfg->port->PCR[pin], arg);
+        case ARM_GPIO_PIN_DIRECTION:      return ARM_GPIO_ControlPin_Direction     (cfg, pin, arg);
+        case ARM_GPIO_PIN_IRQ:            return ARM_GPIO_ControlPin_IRQ           (&cfg->port->PCR[pin], arg);
+        case ARM_GPIO_PIN_PULL:           return ARM_GPIO_ControlPin_Pull          (&cfg->port->PCR[pin], arg);
+        case ARM_GPIO_PIN_SPEED:          return ARM_GPIO_ControlPin_Speed         (&cfg->port->PCR[pin], arg);
+        case ARM_GPIO_PIN_OPEN_DRAIN:     return ARM_GPIO_ControlPin_OpenDrain     (&cfg->port->PCR[pin], arg);
+        case ARM_GPIO_PIN_DRIVE_STRENGTH: return ARM_GPIO_ControlPin_DriveStrength (&cfg->port->PCR[pin], arg);
+        
+        default: return ARM_DRIVER_ERROR_UNSUPPORTED;
+    }
 }
 
 int32_t ARM_GPIO_ControlPin_0(uint32_t pin, uint32_t control, uint32_t arg) { return ARM_GPIO_ControlPin_Shared(pin, control, arg, &gpio_a); }
