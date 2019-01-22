@@ -134,7 +134,7 @@ extern "C"
 \brief GPIO Status
 */
 typedef volatile struct _ARM_GPIO_STATUS {
-  uint32_t reserved        : 32;       ///< Active events bitmask
+  uint32_t reserved        : 32;       ///< reserved
 } ARM_GPIO_STATUS;
 
 
